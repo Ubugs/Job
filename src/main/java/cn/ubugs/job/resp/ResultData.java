@@ -42,6 +42,14 @@ public class ResultData<T> {
         return resultData;
     }
 
+    public static <T> ResultData<T> fail(Integer code, String msg, T data) {
+        ResultData<T> resultData = new ResultData<>();
+        resultData.setStatus(code);
+        resultData.setMessage(msg);
+        resultData.setData(data);
+        return resultData;
+    }
+
     public static <T> ResultData<T> fail(T data) {
         ResultData<T> resultData = new ResultData<>();
         resultData.setStatus(ReturnCode.RC20000.getCode());
