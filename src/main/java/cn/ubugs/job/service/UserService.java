@@ -1,5 +1,6 @@
 package cn.ubugs.job.service;
 
+import cn.ubugs.job.domain.Info;
 import cn.ubugs.job.domain.Role;
 import cn.ubugs.job.domain.User;
 import cn.ubugs.job.domain.VO.UserVO;
@@ -29,10 +30,14 @@ public class UserService {
             throw new ApiException(ReturnCode.RC10002);
         }
         Role role = userVO.getRole();
+        Info info = userVO.getInfo();
         UserResp userResp = new UserResp();
         userResp.setUsername(user.getUsername());
         userResp.setRole_name(role.getName());
         userResp.setRole_id(role.getId());
+        userResp.setNickname(info.getNickname());
+        userResp.setSign(info.getSign());
+        userResp.setPhone(info.getPhone());
         return userResp;
     }
 }

@@ -4,14 +4,17 @@
     <resultMap id="BaseResultMap" type="cn.ubugs.job.domain.VO.UserVO">
         <association property="user" resultMap="cn.ubugs.job.mapper.UserMapper.BaseResultMap"/>
         <association property="role" resultMap="cn.ubugs.job.mapper.RoleMapper.BaseResultMap"/>
+        <association property="info" resultMap="cn.ubugs.job.mapper.InfoMapper.BaseResultMap"/>
     </resultMap>
     <select id="selectUserVO" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT *
         FROM USER AS u,
         role AS r,
-        user_role AS ur
+        user_role AS ur,
+        info AS i
         WHERE username = #{username}
         AND u.id = ur.user_id
-        AND ur.role_id = r.id;
+        AND ur.role_id = r.id
+        AND i.u_id = u.id;
     </select>
 </mapper>
