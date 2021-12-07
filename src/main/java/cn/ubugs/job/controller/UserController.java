@@ -30,4 +30,16 @@ public class UserController {
         return ResultData.success(userResp);
     }
 
+    @PostMapping("/register")
+    public ResultData<Object> register(
+            @RequestParam("username")
+            @Size(min = 6, max = 18, message = "用户名必须为6-18位字符")
+                    String username,
+            @RequestParam("password")
+            @Size(min = 6, max = 18, message = "密码必须为6-18位字符")
+                    String password
+    ) {
+        userService.register(username, password);
+        return ResultData.success();
+    }
 }

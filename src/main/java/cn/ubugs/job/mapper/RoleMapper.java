@@ -1,6 +1,7 @@
 package cn.ubugs.job.mapper;
 
 import cn.ubugs.job.domain.Role;
+import org.apache.ibatis.annotations.Param;
 
 public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +15,8 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    Role findOneByInitial(@Param("initial") Boolean initial);
+
+
 }

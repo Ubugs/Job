@@ -1,6 +1,7 @@
 package cn.ubugs.job.mapper;
 
 import cn.ubugs.job.domain.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +15,7 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User findOneByUsername(@Param("username") String username);
+
 }
