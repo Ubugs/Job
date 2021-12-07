@@ -1,7 +1,7 @@
 package cn.ubugs.job.service;
 
-import cn.ubugs.job.domain.VO.UserVO;
-import cn.ubugs.job.mapper.UserVOMapper;
+import cn.ubugs.job.domain.UserWithRoleWithInfo;
+import cn.ubugs.job.mapper.MyUserMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -9,11 +9,11 @@ import javax.annotation.Resource;
 @Service
 public class TestService {
     @Resource
-    UserVOMapper userVOMapper;
+    MyUserMapper myUserMapper;
 
     public Object login() {
-        UserVO userVO = userVOMapper.selectUserVO("");
-        System.out.println(userVO);
-        return userVO;
+        UserWithRoleWithInfo myUser = myUserMapper.selectUser("");
+        System.out.println(myUser);
+        return myUser;
     }
 }
