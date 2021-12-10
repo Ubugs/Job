@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ubugs.job.mapper.MyArticleMapper">
+    <resultMap id="BaseResultMap" type="cn.ubugs.job.domain.ArticleWithUser">
+        <association property="article" resultMap="cn.ubugs.job.mapper.ArticleMapper.BaseResultMap"/>
+        <association property="user" resultMap="cn.ubugs.job.mapper.UserMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT *
+        FROM article AS a,
+             USER AS u
+        WHERE a.u_id = u.id
+    </select>
+</mapper>
