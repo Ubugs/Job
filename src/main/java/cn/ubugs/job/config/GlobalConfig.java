@@ -16,7 +16,6 @@ public class GlobalConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login");
-//                .excludePathPatterns("/login", "/register");
+                .excludePathPatterns("/login", "/register");
     }
 }
