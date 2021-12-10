@@ -1,9 +1,9 @@
 package cn.ubugs.job.mapper;
 
-import cn.ubugs.job.domain.ArticleWithUser;
+import cn.ubugs.job.domain.ArticleWithInfo;
 
 import java.util.List;
 
 public interface MyArticleMapper {
-    List<ArticleWithUser> selectAll();
+    List<ArticleWithInfo> selectAll();
 }

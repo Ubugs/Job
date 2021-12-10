@@ -52,6 +52,8 @@ public class UserInterceptor implements HandlerInterceptor {
                 return false;
             }
         } else if (permissions.equals("user")) {
+            System.out.println(role.getId());
+            System.out.println(!(role.getId() <= 2));
             // 用户权限校验
             if (!(role.getId() <= 2)) {
                 JSONObject json = new JSONObject();

@@ -43,6 +43,8 @@ public class UserService {
         // 提取用户和角色信息
         Role role = myUser.getRole();
         Info info = myUser.getInfo();
+        System.out.println(role);
+        System.out.println(info);
         // 生成返回对象
         UserResp userResp = new UserResp();
         userResp.setUsername(user.getUsername());

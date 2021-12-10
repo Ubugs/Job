@@ -3,7 +3,7 @@ package cn.ubugs.job.domain;
 import lombok.Data;
 
 @Data
-public class ArticleWithUser {
+public class ArticleWithInfo {
     Article article;
-    User user;
+    Info info;
 }

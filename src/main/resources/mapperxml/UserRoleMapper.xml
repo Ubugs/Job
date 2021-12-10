@@ -119,24 +119,4 @@
         deleted = #{deleted,jdbcType=BOOLEAN}
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <sql id="Join_Column_List">
-        <!--@mbg.generated-->
-        user_role.id as user_role_id,
-        user_role.user_id as user_role_user_id,
-        user_role.role_id as user_role_role_id,
-        user_role.state as user_role_state,
-        user_role.create_time as user_role_create_time,
-        user_role.update_time as user_role_update_time,
-        user_role.deleted as user_role_deleted
-    </sql>
-    <resultMap id="JoinResultMap" type="cn.ubugs.job.domain.UserRole">
-        <!--@mbg.generated-->
-        <id column="user_role_id" property="id"/>
-        <result column="user_role_user_id" property="userId"/>
-        <result column="user_role_role_id" property="roleId"/>
-        <result column="user_role_state" property="state"/>
-        <result column="user_role_create_time" property="createTime"/>
-        <result column="user_role_update_time" property="updateTime"/>
-        <result column="user_role_deleted" property="deleted"/>
-    </resultMap>
 </mapper>

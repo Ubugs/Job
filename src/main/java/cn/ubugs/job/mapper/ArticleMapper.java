@@ -1,6 +1,7 @@
 package cn.ubugs.job.mapper;
 
 import cn.ubugs.job.domain.Article;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +18,5 @@ public interface ArticleMapper {
 
     int updateByPrimaryKey(Article record);
 
-    List<Article> selectAll();
-
-
+    List<Article> findAllByUId(@Param("uId") Integer uId);
 }
