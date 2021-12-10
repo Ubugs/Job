@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 @Service
 public class UserService {
@@ -22,6 +23,8 @@ public class UserService {
     InfoMapper infoMapper;
     @Resource
     RoleMapper roleMapper;
+    @Resource
+    HttpSession session;
 
     public UserResp login(String username, String password) {
         // 多表联合查询
@@ -48,6 +51,8 @@ public class UserService {
         userResp.setNickname(info.getNickname());
         userResp.setSign(info.getSign());
         userResp.setPhone(info.getPhone());
+        // 保存session
+        session.setAttribute("userInfo", myUser);
         return userResp;
     }
 

@@ -1,21 +1,16 @@
 package cn.ubugs.job.controller;
 
-import cn.ubugs.job.service.TestService;
-import org.springframework.stereotype.Controller;
+import cn.ubugs.job.interceptor.Auth;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 
-@Controller
-@ResponseBody
+@RestController
 public class TestController {
-    @Resource
-    TestService testService;
 
+    @Auth(permissions = "user")
     @GetMapping("/")
     public String test() {
-        testService.login();
         return "test";
     }
 }
