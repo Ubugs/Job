@@ -49,11 +49,11 @@ public class ArticleService {
         /*创建返回数据类*/
         PageListResp<ArticleResp> pageList = new PageListResp<>();
         pageList.setList(listArticle);
-        pageList.setTotal(pageInfo.getSize());
+        pageList.setTotal(Math.toIntExact(pageInfo.getTotal()));
         return pageList;
     }
 
-    /*登录用户*/
+    /*登录用户 添加兼职信息*/
     public void add(ArticleReq articleReq) {
         // 获取用户session
         UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
@@ -69,7 +69,7 @@ public class ArticleService {
         }
     }
 
-    /*登录用户*/
+    /*登录用户 获取发布列表*/
     public PageListResp<Article> list1(Integer pageNum, Integer pageSize) {
         /*从session中提取uid*/
         UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
@@ -82,7 +82,45 @@ public class ArticleService {
         /*创建返回数据类*/
         PageListResp<Article> pageList = new PageListResp<>();
         pageList.setList(pageInfo.getList());
-        pageList.setTotal(pageInfo.getSize());
+        pageList.setTotal(Math.toIntExact(pageInfo.getTotal()));
         return pageList;
+    }
+
+    /*登录用户 修改兼职信息*/
+    public void update(Integer id, ArticleReq articleReq) {
+        // 获取用户session
+        UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
+        User user = userInfo.getUser();
+        Article article = articleMapper.selectByPrimaryKey(id);
+        if (article == null) {
+            throw new ApiException(ReturnCode.RC10007);
+        }
+        if (!user.getId().equals(article.getUId())) {
+            throw new ApiException(ReturnCode.RC10008);
+        }
+        BeanUtils.copyProperties(articleReq, article);
+        int i = articleMapper.updateByPrimaryKeySelective(article);
+        if (i != 1) {
+            throw new ApiException(ReturnCode.RC10009);
+        }
+    }
+
+    /*登录用户 删除兼职信息*/
+    public void delete(Integer id) {
+        // 获取用户session
+        UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
+        User user = userInfo.getUser();
+        Article article = articleMapper.selectByPrimaryKey(id);
+        if (article == null) {
+            throw new ApiException(ReturnCode.RC10007);
+        }
+        if (!user.getId().equals(article.getUId())) {
+            throw new ApiException(ReturnCode.RC10008);
+        }
+        article.setDeleted(true);
+        int i = articleMapper.updateByPrimaryKeySelective(article);
+        if (i != 1) {
+            throw new ApiException(ReturnCode.RC10010);
+        }
     }
 }

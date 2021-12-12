@@ -1,6 +1,5 @@
 package cn.ubugs.job.domain.req;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -40,13 +39,11 @@ public class ArticleReq {
      * 工作开始时间
      */
     @NotNull(message = "工作开始时间不能为空")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**
      * 工作结束时间
      */
     @NotNull(message = "工作结束时间不能为空")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date endTime;
 }

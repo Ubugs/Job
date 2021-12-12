@@ -1,6 +1,5 @@
 package cn.ubugs.job.domain.resp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -60,12 +59,10 @@ public class ArticleResp {
     /**
      * 工作开始时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**
      * 工作结束时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 }

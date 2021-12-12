@@ -40,4 +40,18 @@ public class ArticleController {
         PageListResp<Article> articleList = articleService.list1(page, size);
         return ResultData.success(articleList);
     }
+
+    @PostMapping(value = "/user/job/update/{id}", produces = "application/json;charset=UTF-8")
+    @Auth(permissions = "user")
+    public ResultData<Object> update(@PathVariable Integer id, @RequestBody @Valid ArticleReq articleReq) {
+        articleService.update(id, articleReq);
+        return ResultData.success();
+    }
+
+    @GetMapping(value = "/user/job/delete/{id}")
+    @Auth(permissions = "user")
+    public ResultData<Object> delete(@PathVariable Integer id) {
+        articleService.delete(id);
+        return ResultData.success();
+    }
 }

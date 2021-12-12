@@ -32,6 +32,11 @@ public class UserInterceptor implements HandlerInterceptor {
             response.getWriter().write(json.toString());
             return false;
         }
+
+        // 判断是否可以进行转换,不可以直接处理
+        if (!handler.getClass().isAssignableFrom(HandlerMethod.class)) {
+            return true;
+        }
         // 进行权限校验
         Auth auth = ((HandlerMethod) handler).getMethod().getAnnotation(Auth.class);
         if (auth == null) {
@@ -52,8 +57,6 @@ public class UserInterceptor implements HandlerInterceptor {
                 return false;
             }
         } else if (permissions.equals("user")) {
-            System.out.println(role.getId());
-            System.out.println(!(role.getId() <= 2));
             // 用户权限校验
             if (!(role.getId() <= 2)) {
                 JSONObject json = new JSONObject();
