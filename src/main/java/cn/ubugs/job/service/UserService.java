@@ -1,10 +1,14 @@
 package cn.ubugs.job.service;
 
 import cn.ubugs.job.domain.*;
+import cn.ubugs.job.domain.req.InfoReq;
+import cn.ubugs.job.domain.req.PwdReq;
+import cn.ubugs.job.domain.resp.InfoResp;
 import cn.ubugs.job.domain.resp.UserResp;
 import cn.ubugs.job.exception.ApiException;
 import cn.ubugs.job.mapper.*;
 import cn.ubugs.job.resp.ReturnCode;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,6 +91,39 @@ public class UserService {
         info.setUId(user.getId());
         if (infoMapper.insertSelective(info) != 1) {
             throw new ApiException(ReturnCode.RC10005);
+        }
+    }
+
+    public InfoResp queryInfo() {
+        /*从session中提取uid*/
+        UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
+        User user = userInfo.getUser();
+        Info info = infoMapper.findOneByUId(user.getId());
+        InfoResp infoResp = new InfoResp();
+        BeanUtils.copyProperties(info, infoResp);
+        return infoResp;
+    }
+
+    public void updateInfo(InfoReq infoReq) {
+        /*从session中提取uid*/
+        UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
+        User user = userInfo.getUser();
+        Info info = infoMapper.findOneByUId(user.getId());
+        BeanUtils.copyProperties(infoReq, info);
+        int i = infoMapper.updateByPrimaryKeySelective(info);
+        if (i != 1) {
+            throw new ApiException(ReturnCode.RC10009);
+        }
+    }
+
+    public void updatePwd(PwdReq pwdReq) {
+        /*从session中提取uid*/
+        UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
+        User user = userInfo.getUser();
+        user.setPassword(pwdReq.getPassword());
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i != 1) {
+            throw new ApiException(ReturnCode.RC10009);
         }
     }
 }

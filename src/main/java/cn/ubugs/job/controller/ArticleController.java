@@ -2,6 +2,7 @@ package cn.ubugs.job.controller;
 
 import cn.ubugs.job.domain.Article;
 import cn.ubugs.job.domain.req.ArticleReq;
+import cn.ubugs.job.domain.req.StatusReq;
 import cn.ubugs.job.domain.resp.ArticleResp;
 import cn.ubugs.job.domain.resp.PageListResp;
 import cn.ubugs.job.interceptor.Auth;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.Map;
 
 @Validated
 @RestController
@@ -54,4 +56,21 @@ public class ArticleController {
         articleService.delete(id);
         return ResultData.success();
     }
+
+    @GetMapping(value = "/user/job/info")
+    @Auth(permissions = "user")
+    public ResultData<Object> info() {
+        Map<String, Integer> info = articleService.info();
+        return ResultData.success(info);
+    }
+
+
+    @PostMapping(value = "/user/job/status/update")
+    @Auth(permissions = "user")
+    public ResultData<Object> status(@RequestBody @Valid StatusReq statusReq) {
+        articleService.updateStatus(statusReq);
+        return ResultData.success();
+    }
+
+
 }

@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
 @Component
 public class UserInterceptor implements HandlerInterceptor {
@@ -22,6 +23,10 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if ("OPTIONS".equals(request.getMethod().toUpperCase(Locale.ROOT))) {
+            return true;
+        }
+
         // 获取session中的userInfo,判断用户是否登录
         UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
         if (userInfo == null) {

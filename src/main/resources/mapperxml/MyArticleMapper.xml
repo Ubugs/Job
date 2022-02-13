@@ -12,5 +12,8 @@
         FROM article,
         info
         WHERE article.u_id = info.u_id
+        AND article.deleted != 1
+        AND article.state != 2
+        ORDER BY article.update_time DESC
     </select>
 </mapper>

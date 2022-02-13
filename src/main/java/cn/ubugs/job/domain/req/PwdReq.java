@@ -6,15 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Data
-public class UserReq {
-
-    /**
-     * 用户名
-     */
-    @NotEmpty(message = "用户名不能为空")
-    @Size(min = 6, max = 18, message = "用户名必须为6-18位字符")
-    private String username;
-
+public class PwdReq {
     /**
      * 用户密码
      */

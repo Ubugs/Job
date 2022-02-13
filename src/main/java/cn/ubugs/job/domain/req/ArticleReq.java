@@ -2,6 +2,7 @@ package cn.ubugs.job.domain.req;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -10,13 +11,13 @@ public class ArticleReq {
     /**
      * 标题
      */
-    @NotNull(message = "标题不能为空")
+    @NotEmpty(message = "标题不能为空")
     private String title;
 
     /**
      * 工作内容
      */
-    @NotNull(message = "工作内容不能为空")
+    @NotEmpty(message = "工作内容不能为空")
     private String content;
 
     /**
@@ -32,7 +33,7 @@ public class ArticleReq {
     /**
      * 工作地点
      */
-    @NotNull(message = "工作地点不能为空")
+    @NotEmpty(message = "工作地点不能为空")
     private String address;
 
     /**

@@ -5,6 +5,7 @@ import cn.ubugs.job.domain.ArticleWithInfo;
 import cn.ubugs.job.domain.User;
 import cn.ubugs.job.domain.UserWithRoleWithInfo;
 import cn.ubugs.job.domain.req.ArticleReq;
+import cn.ubugs.job.domain.req.StatusReq;
 import cn.ubugs.job.domain.resp.ArticleResp;
 import cn.ubugs.job.domain.resp.PageListResp;
 import cn.ubugs.job.exception.ApiException;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ArticleService {
@@ -98,7 +100,11 @@ public class ArticleService {
         if (!user.getId().equals(article.getUId())) {
             throw new ApiException(ReturnCode.RC10008);
         }
+        if (article.getState() == 2) {
+            throw new ApiException(ReturnCode.RC10011);
+        }
         BeanUtils.copyProperties(articleReq, article);
+        article.setUpdateTime(null);
         int i = articleMapper.updateByPrimaryKeySelective(article);
         if (i != 1) {
             throw new ApiException(ReturnCode.RC10009);
@@ -118,9 +124,39 @@ public class ArticleService {
             throw new ApiException(ReturnCode.RC10008);
         }
         article.setDeleted(true);
+        article.setUpdateTime(null);
         int i = articleMapper.updateByPrimaryKeySelective(article);
         if (i != 1) {
             throw new ApiException(ReturnCode.RC10010);
+        }
+    }
+
+    public Map<String, Integer> info() {
+        // 获取用户session
+        UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
+        User user = userInfo.getUser();
+        Map<String, Integer> map = articleMapper.findAllSumByUId(user.getId());
+        return map;
+    }
+
+    public void updateStatus(StatusReq statusReq) {
+        // 获取用户session
+        UserWithRoleWithInfo userInfo = (UserWithRoleWithInfo) session.getAttribute("userInfo");
+        User user = userInfo.getUser();
+        Article article = articleMapper.selectByPrimaryKey(statusReq.getId());
+        if (article == null) {
+            throw new ApiException(ReturnCode.RC10007);
+        }
+        if (!user.getId().equals(article.getUId())) {
+            throw new ApiException(ReturnCode.RC10008);
+        }
+        if (article.getState() == 2) {
+            throw new ApiException(ReturnCode.RC10011);
+        }
+        article.setState(statusReq.getState());
+        int i = articleMapper.updateStateById(statusReq.getState(), statusReq.getId());
+        if (i != 1) {
+            throw new ApiException(ReturnCode.RC10009);
         }
     }
 }
